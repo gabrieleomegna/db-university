@@ -1,0 +1,38 @@
+1.  SELECT * 
+    FROM `students` 
+    JOIN `degrees` 
+    ON `degrees`.`id`=`students`.`degree_id` 
+    WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
+
+2.  SELECT * 
+    FROM `degrees` 
+    JOIN `departments` ON `departments`.`id`=`degrees`.`department_id` 
+    WHERE `degrees`.`level`='magistrale' 
+    AND `departments`.`name`='Dipartimento di Neuroscienze';
+
+
+3.  SELECT * 
+    FROM `teachers` 
+    JOIN `course_teacher` ON `course_teacher`.`teacher_id` = `teachers`.`id` 
+    JOIN `courses` ON `course_teacher`.`course_id` = `courses`.`id` 
+    WHERE `teachers`.`id`=44;
+
+4.  SELECT `students`.`id`,`students`.`name`, `students`.`surname`, `degrees`.`id`, `degrees`.`name`, `departments`.`id`, `departments`.`name` 
+    FROM `students` 
+    JOIN `degrees` ON `students`.`degree_id`=`degrees`.`id` 
+    JOIN `departments`ON `departments`.`id`=`degrees`.`department_id` 
+    ORDER BY `students`.`surname`, `students`.`name`;
+
+5.  SELECT `degrees`.`id`, `degrees`.`name`, `degrees`.`level`, `courses`.`name`, `teachers`.`name`, `teachers`.`surname` 
+    FROM `degrees` 
+    JOIN `courses` ON `degrees`.`id`=`courses`.`degree_id` 
+    JOIN `course_teacher` ON `courses`.`id`=`course_teacher`.`course_id` 
+    JOIN `teachers` ON `teachers`.`id`= `course_teacher`.`teacher_id`;
+    
+6.  SELECT DISTINCT `departments`.`id`, `departments`.`name`, `teachers`.`id`, `teachers`.`name`, `teachers`.`surname` 
+    FROM `departments` 
+    JOIN `degrees` ON `departments`.`id`=`degrees`.`department_id` 
+    JOIN `courses` ON `degrees`.`id`=`courses`.`degree_id` 
+    JOIN `course_teacher` ON `course_teacher`.`course_id` = `courses`.`id` 
+    JOIN `teachers` ON `teachers`.`id` = `course_teacher`.`teacher_id` 
+    WHERE `departments`.`name`= 'Dipartimento di Matematica';
