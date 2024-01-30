@@ -17,11 +17,6 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
     if($connection && $connection->connect_error) {
         echo "Connection failed:" . $connection->connect_error; 
     }
-} else {
-    // "SELECT * 
-    // FROM `students` 
-    // WHERE `students`.`email` = 'lbellini@sorrentino.it' 
-    // AND `students`.`password`= '12345';";
     $query = "  SELECT * FROM `students` 
                 WHERE `students`.`email` = '" . $_POST['email'] . "'
                 AND `students`.`password`= '".  $_POST['password'] . "';";
