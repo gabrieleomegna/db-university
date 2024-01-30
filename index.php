@@ -25,7 +25,8 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
     if($rispostaQuery && $rispostaQuery->num_rows > 0) {
         while($ennupla = $rispostaQuery->fetch_assoc()){
             // var_dump($ennupla);
-            echo $ennupla['name'];
+            // echo $ennupla['name'];
+            $utenteLoggato = true;
         }
     } else {
         echo 'Non ho trovato nulla oppure la query non è corretta';
