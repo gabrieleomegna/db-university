@@ -17,17 +17,15 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
     if($connection && $connection->connect_error) {
         echo "Connection failed:" . $connection->connect_error; 
     }
-    $query = "  SELECT * FROM `students` 
-                WHERE `students`.`email` = '" . $_POST['email'] . "'
-                AND `students`.`password`= '".  $_POST['password'] . "';";
-    $rispostaQuery = $connection->query($query);
+    $query =$connection->prepare( " SELECT * FROM `students` 
+            WHERE `students`.`email` = ?
+            AND `students`.`password`= ?");
+    $query->bind_param('ss', $_POST['email'], $_POST['password']);
+    $query->execute();
+    $rispostaQuery = $query->get_result();
     
     if($rispostaQuery && $rispostaQuery->num_rows > 0) {
-        while($ennupla = $rispostaQuery->fetch_assoc()){
-            // var_dump($ennupla);
-            // echo $ennupla['name'];
-            $utenteLoggato = true;
-        }
+        $utenteLoggato = true;
     } else {
         echo 'Non ho trovato nulla oppure la query non è corretta';
     }
@@ -58,7 +56,7 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
                 <form class="col-12" action="./index.php" method="POST">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="mb-3">
